@@ -1,0 +1,10 @@
+purchase_type: on_demand
+subnet_id: subnet-15459672
+num_instances: 3
+key_name: catherine-alvarado
+security_group_ids: sg-fadc7582
+instance_type: m3.large
+tag_name: calvarado-cluster
+vol_size: 100
+role: worker
+use_eips: true
