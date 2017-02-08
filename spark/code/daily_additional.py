@@ -4,9 +4,6 @@ from abbreviations_dict import tofullname, toevent
 from operator import itemgetter
 # import pyspark_cassandra
 
-SPARK_IP = "ip-172-31-2-11.us-west-2.compute.internal"
-SPARK_PORT = "7077"
-
 conf = SparkConf() \
        .setMaster("spark://%s:%s" % (SPARK_IP, SPARK_PORT))
 
@@ -93,7 +90,7 @@ print("#########################################")
 
 
 ##############
-#CREATE KEYSPACE gdelt WITH REPLICATION = { 'class' : 'SimpleStrategy', 'repli ation_factor' : 3 };
+#CREATE KEYSPACE gdelt WITH REPLICATION = { 'class' : 'SimpleStrategy', 'replication_factor' : 3 };
 # CREATE TABLE gdelt.world_gather (country varchar, date int, mention map <text,int>, PRIMARY KEY ( country, date ) );
 # SELECT * FROM gdelt.world_gather;
 
