@@ -23,26 +23,6 @@
        </div>
        <svg width="900" height="900"></svg>
        <script src="https://d3js.org/d3.v4.min.js"></script>
-<!---
-       <script>
-           $( "#target" ).click(function() {       
-             var data = {};
-             data.country = $("#country").val();
-             data.timeframe = $("#timeframe").val();
-             data.eventdate = $("#eventdate").val();
-             console.log(data);
-             $.ajax({
-                type : "POST",
-                url : "/overview",
-                data: JSON.stringify(data, null, '\t'),
-                contentType: 'application/json;charset=UTF-8',
-                success: function(result) {
-                   console.log(result);
-                }
-              });
-             })
-       </script>
--->
        <script src="../static/js/test4.js">
 
 {% endblock %}
