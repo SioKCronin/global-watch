@@ -1,0 +1,48 @@
+{% extends "mybase.html" %} <!--this means that you are extending the base tempate -->
+{% block emailid %} <!-- this is the name of the block below -->
+       
+	<div class="row" style="height:40vh;">
+               <div class="col-md-3" style="margin-top:1vh;">
+               <!---<form method="POST">
+                               <div class="form-group text-center">-->
+                                       <label style="font-weight:300; font-size:36px;">Enter country:</label>
+                                       <br /><br />
+                                       <input type="text" class="form-control" id="country" name="emailid" placeholder="Ecuador">
+				       <select id="timeframe" class="form-control" name="date">
+				          <option>Daily</option>
+					  <option>Monthly</option>
+					  <option>Yearly</option>
+				       </select>
+                                       <input type="text" class="form-control" id="eventdate"  name="eventdate" placeholder="20170816">
+                                       <br /><br />
+
+                                       <button id="target" name="emailid-container" class="btn btn-default id-submit">Submit</button>
+                               <!--</div>-->
+                       <!--</form>-->
+               </div>
+       </div>
+       <svg width="900" height="900"></svg>
+       <script src="https://d3js.org/d3.v4.min.js"></script>
+<!---
+       <script>
+           $( "#target" ).click(function() {       
+             var data = {};
+             data.country = $("#country").val();
+             data.timeframe = $("#timeframe").val();
+             data.eventdate = $("#eventdate").val();
+             console.log(data);
+             $.ajax({
+                type : "POST",
+                url : "/overview",
+                data: JSON.stringify(data, null, '\t'),
+                contentType: 'application/json;charset=UTF-8',
+                success: function(result) {
+                   console.log(result);
+                }
+              });
+             })
+       </script>
+-->
+       <script src="../static/js/test4.js">
+
+{% endblock %}
