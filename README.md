@@ -26,4 +26,4 @@ A user can query news for a specific day, month, or year for any given country.
 ~100GB of event data from Events 1.0, a dataset part of The GDELT Project. (https://aws.amazon.com/public-datasets/gdelt/)
 
 ##Pipeline
-![Alt text](http://images/pipelinepicture.png)
+![Alt text](images/pipelinepicture.png)
