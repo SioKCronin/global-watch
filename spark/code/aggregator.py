@@ -3,8 +3,6 @@ from pyspark import SparkContext, SparkConf
 from pyspark.sql import SQLContext
 import pyspark_cassandra
 
-SPARK_IP = "ip-172-31-2-11.us-west-2.compute.internal"
-SPARK_PORT = "7077"
 
 conf = SparkConf() \
        .setMaster("spark://%s:%s" % (SPARK_IP, SPARK_PORT))
