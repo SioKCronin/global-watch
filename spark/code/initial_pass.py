@@ -23,13 +23,11 @@ Returns:
     all of the news data dating back to 1979.
 
 """
-
 from pyspark import SparkContext, SparkConf
 from pyspark.sql import SQLContext
 from abbreviations_dict import tofullname, toevent
 from operator import itemgetter
 import pyspark_cassandra
-
 
 sc = SparkContext()
 sqlContext = SQLContext(sc)
@@ -37,7 +35,6 @@ rdd = sc.textFile("s3a://gdelt-open-data/events/*")
 rdd.cache()
 
 def rddCleaning(rd,timeframe):
-
     def check_valid(tup):
         #checks that a string can be turned to int/float
         #used to filter out rows that to do meet above
@@ -50,7 +47,6 @@ def rddCleaning(rd,timeframe):
             return True
         except ValueError:
             return False
-
 
     def fillin(tup):
         #fills in values for missing information
@@ -111,9 +107,6 @@ def rddCleaning(rd,timeframe):
     else:
 	time = 3
 
-
-
-
     rdd_start  = rd.map(lambda x: x.split('\t')) \
 		           .map(lambda y: ((y[actionGeo_CountryCode],
                                     y[time],
@@ -155,7 +148,6 @@ def rddCleaning(rd,timeframe):
 			           .map(lambda d: ((d[0][0],d[0][1],d[1])))
 
     return rdd_fin
-
 
 #Writing processed rdds into three Cassandra tables:
 daily_rdd = rddCleaning(rdd,"SQLDATE")
