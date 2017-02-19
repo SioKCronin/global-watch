@@ -99,17 +99,17 @@ def event_exists(r):
 modify_val = udf(modify_values, StringType())
 c_exists = udf(country_exists,StringType())
 e_exists = udf(event_exists,StringType())
-df = df.withColumn("Actor1Type1Code",modify_val(df.Actor1Type1Code,df.Actor2Type1Code))
-df = df.withColumn("ActionGeo_CountryCode",c_exists(df.ActionGeo_CountryCode))
-df = df.withColumn("Actor1Type1Code",e_exists(df.Actor1Type1Code))
+dfsub1 = df.withColumn("Actor1Type1Code",modify_val(col("Actor1Type1Code"),col("Actor2Type1Code"))) \
+	       .withColumn("ActionGeo_CountryCode",c_exists(col("ActionGeo_CountryCode"))) \
+	       .withColumn("Actor1Type1Code",e_exists(col("Actor1Type1Code")))
 
-sqlContext.registerDataFrameAsTable(df, 'temp')
+sqlContext.registerDataFrameAsTable(dfsub1, 'temp')
 df2 = sqlContext.sql("""SELECT ActionGeo_CountryCode,
-			                   SQLDATE, MonthYear, Year,
-			                   Actor1Type1Code,
-			                   NumArticles,
-			                   GoldsteinScale,
-			                   AvgTone
+            			       SQLDATE, MonthYear, Year,
+            			       Actor1Type1Code,
+            			       NumArticles,
+            			       GoldsteinScale,
+            			       AvgTone
                           FROM temp
                          WHERE ActionGeo_CountryCode <> ''
                             AND Actor1Type1Code <> ''
@@ -119,33 +119,33 @@ df2 = sqlContext.sql("""SELECT ActionGeo_CountryCode,
 
 sqlContext.registerDataFrameAsTable(df2, 'temp2')
 df3 = sqlContext.sql("""SELECT ActionGeo_CountryCode,
-			                   CAST(SQLDATE AS INTEGER), CAST(MonthYear AS INTEGER), CAST(Year AS INTEGER),
-			                   Actor1Type1Code,
+            			       CAST(SQLDATE AS INTEGER), CAST(MonthYear AS INTEGER), CAST(Year AS INTEGER),
+            			       Actor1Type1Code,
                                CAST(NumArticles AS INTEGER),
                                CAST(GoldsteinScale AS INTEGER),
                                CAST(AvgTone AS INTEGER)
 			              FROM temp2""")
 
-df3.cache()
-
 sqlContext.registerDataFrameAsTable(df3, 'temp3')
+sqlContext.cacheTable('temp3')
+
 dfdaily = sqlContext.sql("""SELECT ActionGeo_CountryCode,
-				                   SQLDATE,
-				                   Actor1Type1Code,
- 				                   SUM(NumArticles) AS NumArticles,
+                				   SQLDATE,
+                				   Actor1Type1Code,
+                 				   SUM(NumArticles) AS NumArticles,
                                    ROUND(AVG(GoldsteinScale),0) AS GoldsteinScale,
-			                       ROUND(AVG(AvgTone),0) AS AvgTone
-            			      FROM temp3
-            			     GROUP BY ActionGeo_CountryCode,
-            				      SQLDATE,
-            				      Actor1Type1Code""")
+                			       ROUND(AVG(AvgTone),0) AS AvgTone
+                			   FROM temp3
+                			  GROUP BY ActionGeo_CountryCode,
+                				      SQLDATE,
+                				      Actor1Type1Code""")
 
 dfmonthly = sqlContext.sql("""SELECT ActionGeo_CountryCode,
                 				     MonthYear,
                 				     Actor1Type1Code,
                 				     SUM(NumArticles) AS NumArticles,
                 				     ROUND(AVG(GoldsteinScale),0) AS GoldsteinScale,
-                			      	 ROUND(AVG(AvgTone),0) as AvgTone
+			      	                 ROUND(AVG(AvgTone),0) as AvgTone
                 				FROM temp3
                 			       GROUP BY ActionGeo_CountryCode,
                 					MonthYear,
@@ -157,10 +157,10 @@ dfyearly = sqlContext.sql("""SELECT ActionGeo_CountryCode,
                 				    SUM(NumArticles) AS NumArticles,
                 				    ROUND(AVG(GoldsteinScale),0) AS GoldsteinScale,
                                     ROUND(AVG(AvgTone),0) as AvgTone
-            			       FROM temp3
-            			      GROUP BY ActionGeo_CountryCode,
-            				       Year,
-            				       Actor1Type1Code""")
+                			   FROM temp3
+                			  GROUP BY ActionGeo_CountryCode,
+                				       Year,
+                				       Actor1Type1Code""")
 
 def rddCleaning(rd,timeframe):
 
@@ -211,24 +211,12 @@ def rddCleaning(rd,timeframe):
 
     return rdd_format
 
+print("THIS IS THE FIRST ONE ######################################################")
 daily_rdd = rddCleaning(dfdaily.rdd,"SQLDATE")
 print(daily_rdd.take(5))
-
+print("THIS IS THE SECOND ONE ######################################################")
 monthly_rdd = rddCleaning(dfmonthly.rdd,"MonthYear")
 print(monthly_rdd.take(5))
-
+print("THIS IS THE THIRD ONE ######################################################")
 yearly_rdd = rddCleaning(dfyearly.rdd,"Year")
 print(yearly_rdd.take(5))
-
-#daily_rdd = rddCleaning(rdd,"SQLDATE")
-#print("FIRST rddCleaning done: ***************************************************")
-#print(daily_rdd.take(6));
-#daily_rdd.saveToCassandra("gdelt","daily")
-#monthly_rdd = rddCleaning(rdd,"MonthYear")
-#print("SECOND rddCleaning done: ***************************************************")
-#print(monthly_rdd.take(6));
-#monthly_rdd.saveToCassandra("gdelt","monthly")
-#yearly_rdd = rddCleaning(rdd,"Year")
-#print("THIRD rddCleaning done: ***************************************************")
-#print(yearly_rdd.take(6));
-#yearly_rdd.saveToCassandra("gdelt","yearly")
