@@ -21,7 +21,6 @@ Returns:
     A rdd that is an aggregated and simplified version of the
     rdd that was inputted. The rdd returned is a summary of
     all of the news data dating back to 1979.
-
 """
 from pyspark import SparkContext, SparkConf
 from pyspark.sql import SQLContext
@@ -146,7 +145,6 @@ def rddCleaning(rd,timeframe):
 		               .map(event_todict) \
                        .map(merge_info) \
 			           .map(lambda d: ((d[0][0],d[0][1],d[1])))
-
     return rdd_fin
 
 #Writing processed rdds into three Cassandra tables:
