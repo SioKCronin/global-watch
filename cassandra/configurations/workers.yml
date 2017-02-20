@@ -1,0 +1,10 @@
+purchase_type: on_demand
+subnet_id: subnet-********
+num_instances: 3
+key_name: catherine-alvarado
+security_group_ids: **-********
+instance_type: m3.medium
+tag_name: ********-*********
+vol_size: 100
+role: worker
+use_eips: true
