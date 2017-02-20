@@ -29,5 +29,13 @@ Over 100GB of news data from Events 1.0, a dataset that is part of The GDELT Pro
 
 ##Database Design
 ###Why Casssandra?
+Textbook Definition:</br>
+Apache Cassandra is an open source, distributed, decentralized, elastically scalable,
+highly available, fault-tolerant, tuneably consistent, row-oriented database that bases
+its distribution design on Amazon’s Dynamo and its data model on Google’s Bigtable.
+
+The problem I solved worked perfectly with Cassandra. I needed to use a database that satified two categories from the
+CAP Theorem - availability and partition tolerance. In order to display country news data to users quickly and reliably I needed a database that efficiently stored all of the timeseries data I was dealing with. </br>
+
 
 ##Results
