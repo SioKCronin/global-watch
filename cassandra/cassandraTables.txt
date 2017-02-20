@@ -1,0 +1,9 @@
+In Cassandra I did the following using the cqlsh command line:
+
+1: Created a keyspace called GDELT with this command:
+CREATE KEYSPACE gdelt WITH REPLICATION = { 'class' : 'SimpleStrategy', 'replication_factor' : 3 };
+
+2: Created three separate tables with the following:
+CREATE TABLE gdelt.daily (country varchar, date int, overview map<text, frozen<map<text, int>>>, PRIMARY KEY ( country, date ) );
+CREATE TABLE gdelt.monthly (country varchar, date int, overview map<text, frozen<map<text, int>>>, PRIMARY KEY ( country, date ) );
+CREATE TABLE gdelt.yearly (country varchar, date int, overview map<text, frozen<map<text, int>>>, PRIMARY KEY ( country, date ) );
