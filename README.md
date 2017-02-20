@@ -28,6 +28,6 @@ Over 100GB of news data from Events 1.0, a dataset that is part of The GDELT Pro
 ![Alt text](images/pipelinepicture.png)
 
 ##Database Design
-#Why Casssandra?
+###Why Casssandra?
 
 ##Results
