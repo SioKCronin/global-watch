@@ -34,6 +34,11 @@ Apache Cassandra is an open source, distributed, decentralized, elastically scal
 highly available, fault-tolerant, tuneably consistent, row-oriented database that bases
 its distribution design on Amazon’s Dynamo and its data model on Google’s Bigtable.
 
+For my use case:
+Distributed: 
+ *I set up a distributed environment and Cassandra is capable of runnning on multiple machines.
+Decentralized:
+
 The problem I solved worked perfectly with Cassandra. I needed to use a database that satified two categories from the
 CAP Theorem - availability and partition tolerance. In order to display country news data to users quickly and reliably I needed a database that efficiently stored all of the timeseries data I was dealing with. </br>
 
