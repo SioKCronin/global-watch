@@ -36,7 +36,7 @@ its distribution design on Amazon’s Dynamo and its data model on Google’s Bi
 
 For my use case:</br>
 Distributed: </br>
-⋅⋅⋅I set up a distributed environment and Cassandra is capable of runnning on multiple machines.
+   I set up a distributed environment and Cassandra is capable of runnning on multiple machines.
 Decentralized:
 
 The problem I solved worked perfectly with Cassandra. I needed to use a database that satified two categories from the
