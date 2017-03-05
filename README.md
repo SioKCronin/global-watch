@@ -34,9 +34,32 @@ Apache Cassandra is an open source, distributed, decentralized, elastically scal
 highly available, fault-tolerant, tuneably consistent, row-oriented database that bases
 its distribution design on Amazon’s Dynamo and its data model on Google’s Bigtable.
 
+####Distributed:</br>
+I set up a distributed environment and Cassandra is capable of runnning on multiple machines.</br>
+
+####Decentralized:</br>
+Every node is identical- simpler than master/slave and helps avoid outages. Cassandra uses a peer to peer protocal and uses gossip to maintain and keep in sync a list of nodes that are alive or dead.</br>
+
+####Elastically Scalable:</br>
+Cassandra cluster can seamlessly scale up and scale back down.</br>
+
+####Highly Available:</br>
+Since Cassandra is distributed and decentralized, there is no single point of failure, which supports high availability.</br>
+
+####Fault Tolerant:</br>
+I can replace failed nodes in my cluster with no downtime and I can replicate data to multiple data centers to offer improved local performance and prevent damage from data center catastrophes.
+
+####Row Oriented Database:</br>
+Cassandra has a primary key that is also known as a composite key and is made up of a partition key and a clustering column. The partition key is used to determine the nodes on which rows are stored. The clustering columns are used to control how data is sorted for storage within a partition.</br>
+
+For my project my partition key was the country name, there were over 200 countries in total, and my clustering column was date. A user can quickly query my Cassandra database becuase of how I have structured my data. My Cassandra cluster knows what node each country is in and can easily seach for a date a user is interested in because dates are sorted.
+
+####Additional Cassandra Features:</br>
+1. Excellent throughput on writes.
+2. Supports flexible schemas.
+
 The problem I solved worked perfectly with Cassandra. I needed to use a database that satified two categories from the
 CAP Theorem - availability and partition tolerance. In order to display country news data to users quickly and reliably I needed a database that efficiently stored all of the timeseries data I was dealing with. </br>
-
 
 ##Results
 I created a tool so that people could learn more about important events outside of their countries. Here is a video recording of the website I built using Flask and D3.js:
