@@ -1,5 +1,3 @@
-
-
 var svg = d3.select("svg"),
      margin = 20,
      diameter = +svg.attr("width"),
@@ -37,13 +35,9 @@ $( "#target" ).click(function() {
              })
 
 function draw(root,updates_dict){
-  //var root = getData(root,updates_dict)
-  //console.log("This is the root: ",root)
-
-  //STRATIFU MIGHT HAVE TO GO IN HERE??
 
   function getData(json,dict_country){
-    
+
    function find_index(curr_json,country){
       var country_children = curr_json["children"]
       for (var i=0; i < country_children.length;i++){
@@ -62,10 +56,13 @@ function draw(root,updates_dict){
         event_type["name"] = event_names[i]
         event_type["children"] = []
         event_info = event_dict[event_names[i]]
+       // console.log(event_info)
+        total_topic = event_info["ArticleMentions"]
+        delete event_info["ArticleMentions"]
         for (var key in event_info){
           key_obj = {}
-          key_obj["name"] = key + " => " + event_info[key]
-          key_obj["size"] = 2000
+          key_obj["name"] = key + ": " + event_info[key]
+          key_obj["size"] = total_topic / 2
           event_type["children"].push(key_obj)
         }
         time_lst.push(event_type)
@@ -77,7 +74,7 @@ function draw(root,updates_dict){
       var new_add = {}
       new_add["children"] = []
       if (bool == true){
-        new_add["name"] = insertname + " => " + tot
+        new_add["name"] = insertname +": " +tot
       }
       else{
         new_add["name"] = insertname
@@ -124,7 +121,6 @@ function draw(root,updates_dict){
   }
 
   var root = getData(root,updates_dict)
-
   root = d3.hierarchy(root)
       .sum(function(d) { return d.size; })
       .sort(function(a, b) { return b.value - a.value; });
@@ -141,34 +137,30 @@ function draw(root,updates_dict){
   circle.exit().remove()
 
   circle = circle.enter()
-      .append("circle")
-      .attr("class", function(d) { return d.parent ? d.children ? "node" : "node node--leaf" : "node node--root"; })
-      .style("fill", function(d) { return d.children ? color(d.depth) : null; })
-      .on("click", function(d) { if (focus !== d) zoom(d), d3.event.stopPropagation(); })
-      .merge(circle);
-
+        .append("circle")
+        .attr("class", function(d) { return d.parent ? d.children ? "node" : "node node--leaf" : "node node--root"; })
+        .style("fill", function(d) { return d.children ? color(d.depth) : null; })
+	.attr("id",function(d){return d.name;})
+        .on("click", function(d) { if (focus !== d) zoom(d), d3.event.stopPropagation(); })
+        .merge(circle);
 
   var text = g.selectAll("text")
     .data(nodes,function(d){
-      return d.country;
+       return d.country;
     })
-  
+
   text.exit().remove();
 
   text = text.enter().append("text")
-      .attr("class", "label")
-      .merge(text)
+        .attr("class", "label")
+        .merge(text)
 
   text = text.style("fill-opacity", function(d) { return d.parent === root ? 1 : 0; })
       .style("display", function(d) { return d.parent === root ? "inline" : "none"; })
-      .text(function(d) { return d.data.name; });
-  
-  var node = g.selectAll("circle,text");
+      .text(function(d) { return d.data.name; })
+//      .attr("dy", ".35em");
 
-  node.append("title")
-    .text(function(d){
-      return d.country
-    })
+  var node = g.selectAll("circle,text");
 
   svg
       .style("background", color(-1))
