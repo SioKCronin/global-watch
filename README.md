@@ -39,3 +39,4 @@ CAP Theorem - availability and partition tolerance. In order to display country 
 
 
 ##Results
+I created a tool so that people could learn more about important events outside of their countries. Here is a video recording of the website I built using Flask and D3.js:
