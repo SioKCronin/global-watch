@@ -62,4 +62,6 @@ The problem I solved worked perfectly with Cassandra. I needed to use a database
 CAP Theorem - availability and partition tolerance. In order to display country news data to users quickly and reliably I needed a database that efficiently stored all of the timeseries data I was dealing with. </br>
 
 ##Results
-I created a tool so that people could learn more about important events outside of their countries. Here is a video recording of the website I built using Flask and D3.js:
+I created a tool so that people could learn more about important events outside of their countries. Here is a video recording of the website I built using Flask and D3.js:</br>
+https://youtu.be/zN5TMSvxy3E
+
