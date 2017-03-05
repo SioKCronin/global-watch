@@ -19,10 +19,6 @@ def index():
   mylist = [1,2,3,4]
   return render_template("index.html", title = 'Home', user = user, mylist = mylist)
 
-#@app.route('/email')
-#def email():
-# return render_template("base.html")
-
 @app.route("/cassandra_test")
 def cassandra_test():
     cql = "SELECT * FROM testing"
@@ -36,7 +32,7 @@ def cassandra_test():
 
 @app.route('/overview')
 def email():
- return render_template("email.html")
+ return render_template("worldVisualization.html")
 
 @app.route("/overview",methods=['POST'])
 def email_post():
