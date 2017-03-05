@@ -101,13 +101,13 @@ def event_exists(r):
 c_exists = udf(country_exists,StringType())
 e_exists = udf(event_exists,StringType())
 dfsub1 =  df.withColumn("ActionGeo_CountryCode",c_exists(col("ActionGeo_CountryCode"))) \
-	        .withColumn("Actor1Type1Code",e_exists(col("Actor1Type1Code")))
+	    .withColumn("Actor1Type1Code",e_exists(col("Actor1Type1Code")))
 
 sqlContext.registerDataFrameAsTable(dfsub1, 'temp')
 df2 = sqlContext.sql("""SELECT ActionGeo_CountryCode,
                                CAST(SQLDATE AS INTEGER), CAST(MonthYear AS INTEGER), CAST(Year AS INTEGER),
                                CASE WHEN Actor1Type1Code = '' AND Actor2Type1Code <> '' THEN Actor2Type1Code
-				                     ELSE Actor1Type1Code END AS Actor1Type1Code,
+				    ELSE Actor1Type1Code END AS Actor1Type1Code,
                                CAST(NumArticles AS INTEGER),
                                CAST(GoldsteinScale AS INTEGER),
                                CAST(AvgTone AS INTEGER)
@@ -123,37 +123,37 @@ sqlContext.registerDataFrameAsTable(df2, 'temp3')
 sqlContext.cacheTable('temp3')
 
 dfdaily = sqlContext.sql("""SELECT ActionGeo_CountryCode,
-				                   SQLDATE,
-				                   Actor1Type1Code,
- 				                   SUM(NumArticles) AS NumArticles,
+				   SQLDATE,
+				   Actor1Type1Code,
+				   SUM(NumArticles) AS NumArticles,
                                    ROUND(AVG(GoldsteinScale),0) AS GoldsteinScale,
-			                       ROUND(AVG(AvgTone),0) AS AvgTone
-            			      FROM temp3
-            			     GROUP BY ActionGeo_CountryCode,
-            				          SQLDATE,
-            				          Actor1Type1Code""")
+			           ROUND(AVG(AvgTone),0) AS AvgTone
+			      FROM temp3
+			     GROUP BY ActionGeo_CountryCode,
+				      SQLDATE,
+				      Actor1Type1Code""")
 
 dfmonthly = sqlContext.sql("""SELECT ActionGeo_CountryCode,
-                				     MonthYear,
-                				     Actor1Type1Code,
-                				     SUM(NumArticles) AS NumArticles,
-                				     ROUND(AVG(GoldsteinScale),0) AS GoldsteinScale,
-                			      	 ROUND(AVG(AvgTone),0) as AvgTone
-                				FROM temp3
-            			       GROUP BY ActionGeo_CountryCode,
-                    					MonthYear,
-                    					Actor1Type1Code""")
+				     MonthYear,
+				     Actor1Type1Code,
+				     SUM(NumArticles) AS NumArticles,
+				     ROUND(AVG(GoldsteinScale),0) AS GoldsteinScale,
+                		     ROUND(AVG(AvgTone),0) as AvgTone
+                		 FROM temp3
+			        GROUP BY ActionGeo_CountryCode,
+					 MonthYear,
+					 Actor1Type1Code""")
 
 dfyearly = sqlContext.sql("""SELECT ActionGeo_CountryCode,
-                				    Year,
-                				    Actor1Type1Code,
-                				    SUM(NumArticles) AS NumArticles,
-                				    ROUND(AVG(GoldsteinScale),0) AS GoldsteinScale,
+				    Year,
+				    Actor1Type1Code,
+				    SUM(NumArticles) AS NumArticles,
+				    ROUND(AVG(GoldsteinScale),0) AS GoldsteinScale,
                                     ROUND(AVG(AvgTone),0) as AvgTone
-            			       FROM temp3
-            			      GROUP BY ActionGeo_CountryCode,
-                				       Year,
-                				       Actor1Type1Code""")
+			       FROM temp3
+			      GROUP BY ActionGeo_CountryCode,
+				       Year,
+				       Actor1Type1Code""")
 
 def rddCleaning(rd,timeframe):
 
