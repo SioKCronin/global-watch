@@ -190,17 +190,17 @@ def rddCleaning(rd,timeframe):
 
     rdd_format = rd.map(lambda y: ((y["ActionGeo_CountryCode"],y[timeframe]),
                                    ([(y["Actor1Type1Code"],y["NumArticles"])],
-				                    [(y["Actor1Type1Code"],
-                                     {"Goldstein":y["GoldsteinScale"],"ToneAvg":y["AvgTone"]})]))) \
-        		   .reduceByKey(lambda a, b: (a[0]+b[0], a[1]+b[1])) \
-        	       .map(lambda v: (v[0],
-                                   sorted(v[1][0],key=itemgetter(1),reverse=True),
-                                   dict(v[1][1]))) \
-        		   .map(sum_allevents) \
+				    [(y["Actor1Type1Code"],
+                                    {"Goldstein":y["GoldsteinScale"],"ToneAvg":y["AvgTone"]})]))) \
+                   .reduceByKey(lambda a, b: (a[0]+b[0], a[1]+b[1])) \
+		   .map(lambda v: (v[0],
+				   sorted(v[1][0],key=itemgetter(1),reverse=True),
+				   dict(v[1][1]))) \
+                   .map(sum_allevents) \
                    .map(popular_avg) \
-        		   .map(event_todict) \
+        	   .map(event_todict) \
                    .map(merge_info) \
-        	       .map(lambda d: ((d[0][0],d[0][1],d[1])))
+        	   .map(lambda d: ((d[0][0],d[0][1],d[1])))
 
     return rdd_format
 
