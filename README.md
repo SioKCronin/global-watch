@@ -17,6 +17,9 @@ place ourselves in a bubble and are only aware of what is relevant to our home c
 Engineering Project was to create a tool that would allows users to quickly zoom out of the bubble and understand from
 a global perspective what is important to other countries in the world.
 
+## Demo
+![](global_watch_demo.gif)
+
 ## What does my project do?
 ### Supported Queries
 A user can query news for a specific day, month, or year for any given country dating back to 1979.
